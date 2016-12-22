@@ -15,16 +15,48 @@
 
 
 
-window.findNRooksSolution = function(n) {
-  var solution = undefined; //fixme
+window.findNRooksSolution = function(n, startingPoint) {
+  var board = new Board({'n': n});
+  var solution = undefined;
+  var conflicts = (board.hasAnyRowConflicts() && board.hasAnyColConflicts());
+  var rowIndex = 0;
+  var colIndex = 0;
+  board.togglePiece(0, startingPoint);
 
+  //for loop through the board
+  while (rowIndex < n && colIndex < n) {
+    //add a piece at 0,0
+    if (!conflicts) {
+      board.togglePiece(rowIndex, colIndex);
+    }
+
+    if (rowIndex > n) {
+      rowIndex -= n;
+    }
+    if (colIndex > n) {
+      colIndex -= n;
+    }
+
+    colIndex++;
+    rowIndex ++;
+  }
+  
+
+  solution = board.rows();
   console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
   return solution;
 };
 
 // return the number of nxn chessboards that exist, with n rooks placed such that none of them can attack each other
 window.countNRooksSolutions = function(n) {
-  var solutionCount = undefined; //fixme
+  var board = new Board({'n': n});
+  var startingPoint = 0;
+
+  var solutionCount = undefined; 
+
+  for (startingPoint; startingPoint < n; startingPoint ++) {
+    board.findNRooksSolution(n, startingPoint);
+  }
 
   console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
   return solutionCount;
@@ -34,7 +66,7 @@ window.countNRooksSolutions = function(n) {
 window.findNQueensSolution = function(n) {
   var solution = undefined; //fixme
 
-  console.log('Single solution for ' + n + ' queens:', JSON.stringify(solution));
+  //console.log('Single solution for ' + n + ' queens:', JSON.stringify(solution));
   return solution;
 };
 
@@ -42,6 +74,6 @@ window.findNQueensSolution = function(n) {
 window.countNQueensSolutions = function(n) {
   var solutionCount = undefined; //fixme
 
-  console.log('Number of solutions for ' + n + ' queens:', solutionCount);
+  //console.log('Number of solutions for ' + n + ' queens:', solutionCount);
   return solutionCount;
 };

@@ -11,10 +11,12 @@ describe('solvers', function() {
             return memo + col;
           }, 0);
         }, 0);
-
+        
         expect(solutionBoard.get('n')).to.equal(n);
+        //console.log(solutionBoard.get('n'), n, 'TESTASDASDASD');
         expect(numPieces).to.equal(n);
         expect(solutionBoard.hasAnyRooksConflicts()).to.be.equal(false);
+
       });
     });
 
